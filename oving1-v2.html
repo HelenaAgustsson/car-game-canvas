@@ -1,0 +1,128 @@
+<html>
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        
+    <div class="container">
+        <div class="row my-2">
+        <div class="row my-2">
+            <div class="col">
+                Ford: <img id="ford" src="images/ford.png" alt="blue car" width="32" height="32">
+                <button class="btn btn-outline-success btn-sm" type="button" id="fordGass">+</button>
+                <button class="btn btn-outline-danger btn-sm" type="button" id="fordBrems">-</button>
+            </div>
+            
+        </div>
+        <div class="row my-2">
+            <div class="col">
+                Chevrolet: <img id="chevrolet" src="images/chevrolet.png" alt="blue car" width="32" height="32">
+                <button class="btn btn-outline-success btn-sm" type="button" id="chevroletGass">+</button>
+                <button class="btn btn-outline-danger btn-sm" type="button" id="chevroletBrems">-</button>
+            </div>
+        </div>
+        <div class="row my-2">
+            <div class="col">
+                Saab: <img id="saab" src="images/saab.png" alt="blue car" width="32" height="32">
+                <button class="btn btn-outline-success btn-sm" type="button" id="saabGass">+</button>
+                <button class="btn btn-outline-danger btn-sm" type="button" id="saabBrems">-</button>
+            </div>
+        </div>
+    </div>
+       
+
+        <div class="row">
+            <div class="col">
+            <canvas id="myCanvas" width="600" height="160" style="border:1px solid #000000;">
+                Your browser does not support the HTML canvas tag.
+                </canvas>
+            </div>
+        </div>
+        
+        <div  class="row" id='result'>
+            
+        </div>
+    </div>
+    </body>
+</html>
+
+<script>
+
+    //get canvas and car images
+    var c = document.getElementById("myCanvas");
+    var ctx = c.getContext("2d");
+    var Ford = document.getElementById("ford");
+    var Chevrolet = document.getElementById("chevrolet");
+    var Saab = document.getElementById("saab");
+    
+
+    //draw canvas
+    class Gameboard {
+        constructor(width, height){
+            this.width=width;
+            this.height=height;
+        }
+        start(){
+            ctx.drawImage(Ford, 10,0);
+            ctx.drawImage(Chevrolet,10,50);
+            ctx.drawImage(Saab,10,100);
+        }
+        clear(){
+            ctx.clearRect(0,0,600,160);  
+        }
+        redraw(){
+
+        }
+    }
+
+
+    // create car object
+    class Car {
+        constructor(image, colour, speed, x, y) {
+            this.image=image;
+            this.speed=speed;
+            this.colour=colour;
+            this.x=x;
+            this.y=y;
+        }
+        go(){
+            this.x+=10;
+        }
+        brake(){
+            this.getPosition-=10;
+        }
+        getPosition(){
+            console.log("X:"+this.x+" Y:"+this.y);
+        }
+        draw(){
+            ctx.drawImage(this.image, this.x, this.y);
+        }
+    }
+
+    function drawCars () {
+        ford.draw();
+        chevrolet.draw();
+        saab.draw();
+    }
+
+    let ford = new Car(Ford, 'blue', 10, 10, 0);
+    let chevrolet = new Car(Chevrolet, 'red', 10, 10, 50);
+    let saab = new Car(Saab, 'green', 10, 10,100)
+
+    let gameboard= new Gameboard(600,150);
+    gameboard.start();
+
+    let fordGass = document.getElementById('fordGass');
+
+    fordGass.onclick = () => {
+        ford.go();
+        gameboard.clear();
+        drawCars();
+    }
+
+
+
+    
+</script>
